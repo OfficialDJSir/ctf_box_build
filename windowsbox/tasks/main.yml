@@ -1,0 +1,13 @@
+---
+- name: enable unsigned drivers
+  win_shell: bcdedit.exe /set nointegritychecks ON 
+
+- win_reboot:
+    reboot_timeout: 3600
+  when: false
+
+- name: Install spice-quest-tools
+  win_package:
+    path: https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe
+    product_id: "{8122E54F-475E-4DA7-BEC2-B6B2DE16A988}"
+    arguments: /sq

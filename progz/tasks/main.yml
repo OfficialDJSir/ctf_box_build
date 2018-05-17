@@ -16,6 +16,12 @@
     cp /tmp/yafu /bin/yafu
     chmod 0755 /bin/yafu
 
+- name: Start docker if not started
+  service:
+    name: docker
+    state: started
+
+
 - name: angr install <-- Takes a while
   when: true
   shell: docker pull angr/angr

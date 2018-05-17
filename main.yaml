@@ -1,4 +1,10 @@
 ---
+- hosts: windows
+  gather_facts: no
+  tags: windows
+  roles:
+    - windowsbox
+
 - hosts: kali
   become: yes
   gather_facts: no
@@ -6,3 +12,4 @@
     - kalibox
     - gitrepos
     - progz
+    - wordz
