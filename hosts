@@ -3,3 +3,6 @@ localhost
 
 [kali]
 192.168.122.199 ansible_user=root ansible_ssh_pass=toor
+
+[windows]
+192.168.122.106
