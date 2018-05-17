@@ -4,10 +4,32 @@
 
 - win_reboot:
     reboot_timeout: 3600
-  when: false
+  when: true
 
 - name: Install spice-quest-tools
   win_package:
     path: https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe
     product_id: "{8122E54F-475E-4DA7-BEC2-B6B2DE16A988}"
-    arguments: /sq
+    arguments: /S
+
+
+
+
+- name: Install firefox
+  win_package:
+    path: https://ftp.mozilla.org/pub/firefox/releases/61.0b5/win64/en-US/Firefox%20Setup%2061.0b5.exe
+    product_id: creates_*
+    arguments: -ms
+
+- name: Install python2.7
+  win_package:
+    path: https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi
+    product_id: "{16CD92A4-0152-4CB7-8FD6-9788D3363617}"
+    arguments: /q
+
+
+- name: Install fiddler
+  win_package:
+    path: https://telerik-fiddler.s3.amazonaws.com/fiddler/FiddlerSetup.exe
+    product_id: creates_*
+    arguments: /S

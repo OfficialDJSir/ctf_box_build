@@ -1,0 +1,10 @@
+---
+- name: Download wordlists
+  get_url:
+    url: item
+    dest: "/usr/share/wordlists/{{ item.split('/'')[-1] }}"
+    mode: 0755
+  with_items:
+    - https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Leaked-Databases/Ashley-Madison.txt
+    - https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Leaked-Databases/Lizard-Squad.txt
+    - https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Leaked-Databases/000webhost.txt
