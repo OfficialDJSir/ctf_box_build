@@ -1,0 +1,29 @@
+---
+- name: Download & Install stegsolve
+  get_url:
+    url: http://www.caesum.com/handbook/Stegsolve.jar
+    dest: /bin/stegsolve
+    mode: 0755
+
+- name: Unpack yafu
+  unarchive:
+    src: https://downloads.sourceforge.net/project/yafu/1.34/yafu-1.34.zip
+    dest: /tmp
+    remote_src: yes
+
+- name: Install yafu
+  shell: |
+    cp /tmp/yafu /bin/yafu
+    chmod 0755 /bin/yafu
+
+- name: angr install <-- Takes a while
+  when: true
+  shell: docker pull angr/angr
+
+- name: Get some gems
+  gem:
+    name: item
+    state: present
+  with_items:
+    - one_gadget
+

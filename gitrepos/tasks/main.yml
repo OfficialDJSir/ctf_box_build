@@ -1,0 +1,96 @@
+---
+- name: Git clone Featherduster
+  git:
+    repo: https://github.com/nccgroup/featherduster.git
+    dest: /opt/featherduster
+    version: master
+
+- name: Install Featherduster
+  shell: python /opt/featherduster/setup.py install
+
+- name: Git clone python-paddingoracle
+  git:
+    repo: https://github.com/mwielgoszewski/python-paddingoracle.git
+    dest: /opt/python-paddingoracle
+    version: master
+
+- name: Install python-paddingoracle
+  shell: python /opt/python-paddingoracle/setup.py install
+
+
+- name: Git clone xortool
+  git:
+    repo: https://github.com/hellman/xortool.git
+    dest: /opt/xortool
+    version: master
+
+- name: Install xortool
+  shell: |
+    cd /opt/xortool
+    python /opt/xortool/setup.py install
+
+- name: Git clone rsatool
+  git:
+    repo: https://github.com/ius/rsatool.git
+    dest: /opt/rsatool
+    version: master
+
+- name: Install rsatool
+  ignore_errors: yes
+  shell: |
+    cd /opt/rsatool
+    python /opt/rsatool/setup.py install
+
+
+- name: Git clone ROPgadget
+  git:
+    repo: https://github.com/JonathanSalwan/ROPgadget.git
+    dest: /opt/ROPgadget
+    version: master
+
+- name: Install ROPgadget
+  shell: |
+    cd /opt/ROPgadget/
+    python /opt/ROPgadget/setup.py install
+
+- name: Git clone HashPump
+  git:
+    repo: https://github.com/bwall/HashPump.git
+    dest: /opt/HashPump
+    version: master
+
+- name: Install HashPump
+  shell: |
+    cd /opt/HashPump
+    python /opt/HashPump/setup.py install
+
+- name: Git clone sqlmap
+  git:
+    repo: https://github.com/sqlmapproject/sqlmap.git
+    dest: /opt/sqlmap
+    version: master
+
+- name: Git clone pemcrack
+  git:
+    repo: https://github.com/robertdavidgraham/pemcrack.git
+    dest: /opt/pemcrack
+    version: master
+
+- name: Install pemcrack
+  shell: |
+    cd /opt/pemcrack
+    make
+    cp bin/pemcrack /bin/
+
+- name: Git clone snowman
+  git: 
+    repo: https://github.com/yegord/snowman.git
+    dest: /opt/snowman
+    version: master
+
+- name: Install snowman
+  when: false
+  comment: broken right now
+  shell: |
+    cd /opt/snowman
+    cmake --build . --target install

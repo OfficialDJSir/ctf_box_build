@@ -1,5 +1,5 @@
 ---
-- name: setup repos
+- name: Setup repos
   lineinfile:
     path: /etc/apt/sources.list
     line: "{{item}}"
@@ -7,20 +7,56 @@
     - deb https://apt.dockerproject.org/repo debian-stretch main
     - deb https://packages.microsoft.com/repos/vscode stable main
 
-- name: get docker repo keys
+- name: Setup alias's
+  lineinfile:
+    path: /root/.bash_aliases
+    line: "{{item}}"
+  with_items:
+    - alias http='python -m SimpleHTTPServer 8000'
+
+
+- name: Add i386
+  shell: dpkg --add-architecture i386
+
+- name: Get docker repo keys
   shell: apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 - name: get microsoft keys
   shell: |
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
     mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
 
-- name: Install stuff
-  apt: name={{ item }} state=present update_cache=yes install_recommends=yes force_apt_get=yes
+- name: Update apt Cache
+  apt:
+    update_cache: yes
+
+- name: Install stuff <<-- Takes a while
+  apt: name={{ item }} state=present install_recommends=yes force_apt_get=yes
   with_items:
     - spice-vdagent
     - ansible
     - libncurses5-dev
     - docker-engine
+    - "libc6:i386"
+    - code
+    - g++
+    - libssl-dev
+    - audacity
+    - bkhive
+    - wine32
+    - libgmp3-dev
+    - libgmp-dev
+    - libz-dev
+    - unar
+    - cmake
+    - asciinema
+    - crackle
+    - kali-linux-pwtools
+    - python-aff4
+    - python-oletools
+    - rsakeyfind
+    - creddump7
+    - gimp
+    - python-pyotp
 
   #not sure why this dont want to install normally
 - name: Install python-dev
@@ -36,71 +72,8 @@
    - requests
    - pandas
    - capstone
+   - pdfkit
+   - Pillow
 
-- name: Git clone Featherduster
-  git:
-    repo: https://github.com/nccgroup/featherduster.git
-    dest: /opt/featherduster
-    version: master
-
-- name: Install Featherduster
-  shell: python /opt/featherduster/setup.py install
-
-- name: Git clone python-paddingoracle
-  git:
-    repo: https://github.com/mwielgoszewski/python-paddingoracle.git
-    dest: /opt/python-paddingoracle
-    version: master
-
-- name: Install python-paddingoracle
-  shell: python /opt/python-paddingoracle/setup.py install
-
-- name: Download & Install stegsolve
-  get_url:
-    url: http://www.caesum.com/handbook/Stegsolve.jar
-    dest: /bin/stegsolve
-    mode: 0755
-
-- name: Git clone xortool
-  git:
-    repo: https://github.com/hellman/xortool.git
-    dest: /opt/xortool
-    version: master
-
-- name: Install xortool
-  shell: |
-    cd /opt/xortool
-    python /opt/xortool/setup.py install
-
-- name: Git clone rsatool
-  git:
-    repo: https://github.com/ius/rsatool.git
-    dest: /opt/rsatool
-    version: master
-
-- name: Install rsatool
-  ignore_errors: yes
-  shell: |
-    cd /opt/rsatool
-    python /opt/rsatool/setup.py install
-
-
-- name: Git clone ROPgadget
-  git:
-    repo: https://github.com/JonathanSalwan/ROPgadget.git
-    dest: /opt/ROPgadget
-    version: master
-
-- name: Install ROPgadget
-  shell: python /opt/ROPgadget/setup.py install
-
-- name: angr install
-  when: false
-  shell: docker pull angr/angr
-
-- name: Get some gems
-  gem:
-    name: item
-    state: present
-  with_items:
-    - one_gadget
+- name: Creates ctf dir
+  file: path=/root/ctf state=directory
