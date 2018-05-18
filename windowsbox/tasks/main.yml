@@ -117,7 +117,7 @@
     product_id: creates_*
     arguments: /q
 
-- name: Check for Autopsy before install
+- name: Check for IDA 7.0 before install
   win_stat:
     path: C:\Program Files\IDA Freeware 7.0
   register: fc
