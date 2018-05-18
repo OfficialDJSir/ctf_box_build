@@ -117,3 +117,14 @@
     product_id: creates_*
     arguments: /q
 
+- name: Check for Autopsy before install
+  win_stat:
+    path: C:\Program Files\IDA Freeware 7.0
+  register: fc
+
+- name: Install IDA Free Version
+  when: fc.stat.exists == False
+  win_package:
+    path: https://out7.hex-rays.com/files/idafree70_windows.exe
+    product_id: creates_*
+    arguments: /verysilent
