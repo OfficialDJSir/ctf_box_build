@@ -29,7 +29,7 @@ On install, create admin account named ctf with a password of ctf
 
 In a powershell term RUNNING AS ADMIN, run the following
 ```
-(new-object net.webclient).DownloadFile('https://raw.githubusercontent.com/chashtag/ctf_box_build/master/ConfigureRemotingForAnsible.ps1','local.ps1')
+(new-object net.webclient).DownloadFile('https://raw.githubusercontent.com/chashtag/ctf_box_build/master/ConfigureRemotingForAnsible.ps1','ConfigureRemotingForAnsible.ps1')
 ./ConfigureRemotingForAnsible.ps1
 ```
 
